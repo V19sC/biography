@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vincent Musyoka Wambua's personal biography including early life, accomplishments, and more.">
+    <meta name="keywords" content="Vincent Musyoka, biography, web development, coding, achievements">
+    <title>Vinny Bio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(130, 173, 238);
+            background: linear-gradient(to top, #5444ad, #f39c12, #0f0);
+            background-size: cover;
+            scroll-behavior: smooth;
+        } 
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background: repeating-radial-gradient(circle,purple, #0f0 30%);
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            padding: 10px 0;
+        }
+
+        nav a {
+            display: block;
+            color: white;
+            padding: 14px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        /* Other styles */
+        .container {
+            width: 80%;
+            margin: 100px auto 20px;
+            padding: 20px;
+            color: white;
+        }
+
+        .bio-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .bio-content.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .profile-picture {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 20px;
+            border: 5px solid white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            float:right;
+        }
+
+        .bio-button {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .bio-button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        h1 {
+            color: white;
+            text-shadow:
+                0 0 20px #ff9900,
+                0 0 30px #ff6600,
+                0 0 40px #ff3300,
+                0 0 50px #ff0000;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            animation: fadeInText 1s ease-in-out;
+        }
+
+        @keyframes fadeInText {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            nav a {
+                padding: 15px;
+            }
+
+            .bio-button {
+                width: 100%;
+                padding: 15px;
+            }
+
+            .profile-picture {
+                width: 150px;
+                height: 150px;
+            }
+
+            .left-image,
+            .right-image {
+                float: none;
+                margin: 0 auto;
+                display: block;
+                text-align: center;
+            }
+        }
+
+        #sidebar {
+            position: fixed;
+            top: 50%;
+            right: -300px;
+            background-color: #111;
+            color: white;
+            padding: 20px;
+            display: none;
+            transform: translateY(-50%);
+            box-shadow: -3px 0 5px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            transition: right 0.3s ease-in-out;
+        }
+
+        #sidebar.show {
+            display: block;
+            right: 0;
+        }
+
+        #sidebar a {
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        #sidebar a:hover {
+            background-color: #575757;
+            padding: 5px;
+        }
+
+        #call-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            z-index: 101;
+        }
+
+        #call-button:hover {
+            background-color: #45a049;
+        }
+
+        #call-button i {
+            font-size: 24px;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: white;
+            display: none;
+        }
+
+        /* Contact Form Style */
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid greenyellow;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            background-color: darkgreen;
+            color: aliceblue;
+            cursor: pointer;
+            border-radius: 7px;
+        }
+
+        button:hover {
+            background-color: blue;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+
+    <nav>
+        <a href="#home" aria-label="Go to Home section">Home</a>
+        <a href="#earlylife" aria-label="Go to Early Life section">Early Life</a>
+        <a href="#awards" aria-label="Go to Life Accomplishments section">Life Accomplishments</a>
+        <a href="#contact" aria-label="Go to Contact section">Contact</a>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>MY BIO - VINCENT</h1>
+        </header>
+
+        <section id="bio-entry">
+            <h2>VINCENT BIO</h2>
+            <p>Click the button below to view my biography:</p>
+            <button class="bio-button" onclick="showPromptBox()">OPEN</button>
+        </section>
+
+        <div id="bio-content" class="bio-content">
+            <section id="home">
+                <img src="VINCENT.jpg" alt="Vincent's Profile Picture" class="profile-picture left-image" loading="lazy">
+            </section>
+
+            <section id="bio">
+                <h2>ABOUT ME</h2>
+                <p>Hello! My name is Vincent Musyoka Wambua. I am the first born in our family of 5 siblings.</p>
+                <p>I am passionate about web development and coding. Programming has become so central to my life that I even ventured into ethical hacking. However, hacking doesn’t require being a bully; it’s more about using the skill responsibly to achieve your goals.</p>
+            </section>
+
+            <section>
+                <img src="https://www.gstatic.com/webp/gallery/2.png" alt="Family Photo" class="profile-picture right-image" loading="lazy">
+            </section>
+
+            <section id="earlylife">
+                <h2>EARLY LIFE</h2>
+                <p>I was born in June 2005 in a local village called Central. Central is located 40 km from Makueni County's Wote Town, in the Makueni Constituency.</p>
+            </section>
+
+            <section id="awards">
+                <h2>LIFE WINNING AWARDS</h2>
+                <p>One of my great achievements was killing 1900 mosquitoes during a summer camp, which earned me the title of "Mosquito Slayer!"</p>
+                <img src="https://www.gstatic.com/webp/gallery/2.png"  alt="Celebration Photo" class="profile-picture left-image" loading="lazy">
+                <p>Faith, my sister, is now taller and a bit heavier than me. Sometimes, she teases me by showing off her new walking style. We have lots of fun together, though we don’t always agree on everything!</p>
+            </section>
+
+            <section>
+                <img src="https://www.gstatic.com/webp/gallery/2.png" alt="Family Fun Time" class="profile-picture right-image" loading="lazy">
+                <p>No matter how many people I have in my life, my SISTER will always be my favorite and my first choice. 💜I LOVE YOU SISSY 💜</p>
+            </section>
+
+            <section>
+                <img src="https://www.gstatic.com/webp/gallery/2.png"  alt="Outdoor Adventures" class="profile-picture left-image" loading="lazy">
+            </section>
+        </div>
+
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <button onclick="displayContactForm()">OPEN CONTACT FORM</button>
+            <div id="form-display"></div>
+        </section>
+    </div>
+
+    <div id="sidebar">
+        <a href="tel:+254745169071">Call me: 0745169071</a>
+    </div>
+
+    <button id="call-button" onclick="toggleSidebar()">
+        <i class="fa fa-phone"></i>
+    </button>
+
+    <div class="loading">Loading...</div>
+
+    <script>
+        function showPromptBox() {
+            let userName = prompt("Please enter your name to view my bio:");
+            while (!userName || userName.trim() === "") {
+                alert("Please enter a valid name.");
+                userName = prompt("Please enter your name to view my bio:");
+            }
+            document.querySelector('.loading').style.display = 'block'; // Show loading spinner
+            setTimeout(() => {
+                alert("Hello, " + userName + " Welcome to my biography.");
+                document.getElementById("bio-content").classList.add("show");
+                document.getElementById("bio-entry").style.display = "none";
+                document.querySelector('.loading').style.display = 'none'; // Hide loading spinner
+            }, 1000);
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('show');
+        }
+
+        document.body.addEventListener('click', function(event) {
+            if (!document.getElementById('sidebar').contains(event.target) && event.target !== document.getElementById('call-button')) {
+                document.getElementById('sidebar').classList.remove('show');
+            }
+        });
+
+        function displayContactForm() {
+            const formHtml = `
+                <h3>Contact Form</h3>
+                <input type="text" placeholder="Your Name" id="contact-name">
+                <input type="email" placeholder="Your Email" id="contact-email">
+                <textarea placeholder="Your Message" id="contact-message"></textarea>
+                <button onclick="submitContactForm()">Submit</button>
+            `;
+            document.getElementById("form-display").innerHTML = formHtml;
+        }
+
+        function submitContactForm() {
+            alert("Contact form submitted!");
+        }
+    </script>
+
+</body>
+</html>
